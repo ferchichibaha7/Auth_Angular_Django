@@ -82,8 +82,6 @@ export class AuthentificationComponent implements OnInit {
         this.router.navigate(['/']);
       },
       (error) => {
-        console.log(error);
-
      this.hundelErrors(error)
       }
     );
