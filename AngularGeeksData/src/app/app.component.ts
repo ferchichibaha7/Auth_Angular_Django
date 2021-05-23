@@ -7,10 +7,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'AngularGeeksData';
-  formstate = 'show';
 
-  toggleForm(type)
-  {
-    type == 'login' ? this.formstate = 'show' : this.formstate = 'hide';
-  }
 }

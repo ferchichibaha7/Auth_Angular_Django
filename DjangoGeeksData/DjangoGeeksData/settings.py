@@ -136,3 +136,11 @@ AUTH_USER_MODEL = 'miniProjectGeeksData.User'
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True # need to be true # to enable the front to accept the cookies
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:4200',
+    'http://127.0.0.1:4200'
+] # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
+CORS_ORIGIN_REGEX_WHITELIST = [
+    'http://localhost:4200',
+    'http://127.0.0.1:4200'
+]

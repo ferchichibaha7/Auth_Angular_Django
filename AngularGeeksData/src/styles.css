@@ -13,3 +13,9 @@ html,body{
   place-items: center;
   background: -webkit-linear-gradient(left, #e20C0C, #e54d34);
 }
+
+.cross-validation-error-message{
+  margin-top: 10px !important;
+  font-size: 13px !important;
+  color: #e20C0C;
+}

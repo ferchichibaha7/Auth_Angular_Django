@@ -32,7 +32,7 @@ Signup Form</div>
 <div class="signup-link" (click)="toggleForm('signup')">
 Not a member? <a >Signup now</a></div>
 </form>
-<form [formGroup]="registerForm" (submit)="register()"  class="signup">
+<form [formGroup]="registerForm" (submit)="register()" #reg  class="signup">
         <div class="field">
           <input formControlName="email" type="text" placeholder="Email Address" required>
         </div>
@@ -42,9 +42,20 @@ Not a member? <a >Signup now</a></div>
 <div class="field">
           <input formControlName="cpassword" type="password" placeholder="Confirm password" required>
         </div>
+        <div *ngIf="registerForm.errors?.notSame && (registerForm.touched || registerForm.dirty)" class="cross-validation-error-message alert alert-danger ">
+          password and confirmation do not match
+        </div>
+
+        <div  *ngIf="isSignUpFailed" >
+        <div class="cross-validation-error-message alert alert-danger " *ngFor="let error of errorMessages">
+         {{error}}
+        </div>
+          </div>
+
 <div class="field btn">
           <div class="btn-layer">
 </div>
+
 <input [disabled]="!registerForm.valid" type="submit" value="Signup">
         </div>
 </form>
