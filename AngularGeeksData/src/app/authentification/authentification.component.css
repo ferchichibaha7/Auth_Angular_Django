@@ -2,6 +2,12 @@
   background: #e20C0C;
   color: #fff;
 }
+.auth{
+  display: grid;
+  height: calc(100vh - 100px);
+  width: 100%;
+  place-items: center
+}
 .wrapper{
   overflow: hidden;
   max-width: 390px;
@@ -134,14 +140,14 @@ form .field input:focus::placeholder{
 .form-inner form .signup-link a:hover{
   text-decoration: underline;
 }
-form .btn{
+form .btnn{
   height: 50px;
   width: 100%;
   border-radius: 5px;
   position: relative;
   overflow: hidden;
 }
-form .btn .btn-layer{
+form .btnn .btnn-layer{
   height: 100%;
   width: 300%;
   position: absolute;
@@ -150,10 +156,10 @@ form .btn .btn-layer{
   border-radius: 5px;
   transition: all 0.4s ease;;
 }
-form .btn:hover .btn-layer{
+form .btnn:hover .btnn-layer{
   left: 0;
 }
-form .btn input[type="submit"]{
+form .btnn input[type="submit"]{
   height: 100%;
   width: 100%;
   z-index: 1;

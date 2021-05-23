@@ -1,3 +1,4 @@
+<div class="auth">
 <div class="wrapper">
   <div class="title-text">
     <div [ngClass]="formstate" class="title login">
@@ -15,17 +16,23 @@ Signup Form</div>
 </div>
 </div>
 <div class="form-inner">
-      <form [ngClass]="formstate" action="#" class="login">
+      <form  [formGroup]="loginForm"  [ngClass]="formstate" (submit)="login()" #log class="login">
         <div class="field">
-          <input type="text" placeholder="Email Address" required>
+          <input formControlName="email" type="text" placeholder="Email Address" required>
         </div>
 <div class="field">
-          <input type="password" placeholder="Password" required>
+          <input formControlName="password" type="password" placeholder="Password" required>
         </div>
+
 <div class="pass-link">
 <a href="#">Forgot password?</a></div>
-<div class="field btn">
-          <div class="btn-layer">
+<div  *ngIf="isFailed" >
+  <div class="cross-validation-error-message alert alert-danger " *ngFor="let error of errorMessages">
+   {{error}}
+  </div>
+    </div>
+<div class="field btnn">
+          <div class="btnn-layer">
 </div>
 <input type="submit" value="Login">
         </div>
@@ -46,19 +53,20 @@ Not a member? <a >Signup now</a></div>
           password and confirmation do not match
         </div>
 
-        <div  *ngIf="isSignUpFailed" >
+        <div  *ngIf="isFailed" >
         <div class="cross-validation-error-message alert alert-danger " *ngFor="let error of errorMessages">
          {{error}}
         </div>
           </div>
 
-<div class="field btn">
-          <div class="btn-layer">
+<div class="field btnn">
+          <div class="btnn-layer">
 </div>
 
 <input [disabled]="!registerForm.valid" type="submit" value="Signup">
         </div>
 </form>
+</div>
 </div>
 </div>
 </div>

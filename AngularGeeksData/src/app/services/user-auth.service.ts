@@ -16,4 +16,24 @@ export class UserAuthService {
   register(data): Observable<any> {
     return this.http.post<any>(this.baseurl+'register', data);
   }
+
+  login(data): Observable<any> {
+    return this.http.post<any>(this.baseurl+'login', data, {
+      withCredentials: true
+    });
+  }
+
+  logout(): Observable<any> {
+    return this.http.post<any>(this.baseurl+'logout', {}, {
+      withCredentials: true
+    });
+  }
+
+  getUser(): Observable<any> {
+    return this.http.get<any>(this.baseurl+'user', {
+      withCredentials: true
+    });
+  }
+
+
 }

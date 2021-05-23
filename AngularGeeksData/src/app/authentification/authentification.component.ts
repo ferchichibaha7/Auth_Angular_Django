@@ -2,6 +2,7 @@ import { UserAuthService } from './../services/user-auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-authentification',
@@ -9,18 +10,25 @@ import { Router } from '@angular/router';
   styleUrls: ['./authentification.component.css'],
 })
 export class AuthentificationComponent implements OnInit {
+
   formstate = 'show';
   registerForm: FormGroup;
-  isSignUpFailed = false;
+  loginForm: FormGroup;
+  isFailed = false;
+  isLoggedIn = false;
   errorMessages = [];
+
+
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private auth_service: UserAuthService
+    private auth_service: UserAuthService,
   ) {}
 
   ngOnInit(): void {
+
     this.initRegForm();
+    this.initlogForm();
   }
 
   initRegForm() {
@@ -32,6 +40,13 @@ export class AuthentificationComponent implements OnInit {
       },
       { validators: this.checkPasswords }
     );
+  }
+
+  initlogForm() {
+    this.loginForm = this.formBuilder.group({
+      email: '',
+      password: '',
+    });
   }
 
   toggleForm(type) {
@@ -50,10 +65,26 @@ export class AuthentificationComponent implements OnInit {
         this.formstate = 'show';
       },
       (error) => {
-        for (const [key, value] of Object.entries(error.error)) {
-          this.errorMessages.push(value[0]);
-        }
-        this.isSignUpFailed = true;
+        this.hundelErrors(error)
+      }
+    );
+  }
+
+  login(): void {
+
+    this.errorMessages = [];
+    let tosend = this.loginForm.getRawValue();
+    this.auth_service.login(tosend).pipe(
+      take(1),
+    ).subscribe(
+      (res) => {
+        this.errorMessages = [];
+        this.router.navigate(['/']);
+      },
+      (error) => {
+        console.log(error);
+
+     this.hundelErrors(error)
       }
     );
   }
@@ -63,4 +94,17 @@ export class AuthentificationComponent implements OnInit {
     const confirmPassword = registerForm.get('cpassword').value;
     return password === confirmPassword ? null : { notSame: true };
   }
+
+
+  hundelErrors(error){
+
+    for (const [key, value] of Object.entries(error.error)) {
+      let err = Array.isArray(value) ? value[0] : value;
+      this.errorMessages.push(err);
+    }
+    this.isFailed = true;
+  }
 }
+
+
+
