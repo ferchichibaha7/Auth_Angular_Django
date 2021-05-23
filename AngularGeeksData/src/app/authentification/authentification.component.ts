@@ -20,6 +20,10 @@ export class AuthentificationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.initRegForm();
+  }
+
+  initRegForm() {
     this.registerForm = this.formBuilder.group(
       {
         email: '',
@@ -43,6 +47,7 @@ export class AuthentificationComponent implements OnInit {
     this.auth_service.register(tosend).subscribe(
       (res) => {
         this.errorMessages = [];
+        this.formstate = 'show';
       },
       (error) => {
         for (const [key, value] of Object.entries(error.error)) {
