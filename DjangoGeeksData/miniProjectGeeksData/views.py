@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.exceptions import AuthenticationFailed
-from .serializers import UserSerializer
+from .serializers import UserSerializer, UsersSerializer
 from .models import User
 import jwt, datetime
 
@@ -43,7 +43,6 @@ class LoginView(APIView):
 
 
 class UserView(APIView):
-    
     def get(self, request):
         token = request.COOKIES.get('jwt')
 
@@ -57,6 +56,21 @@ class UserView(APIView):
 
         user = User.objects.filter(id=payload['id']).first()
         serializer = UserSerializer(user)
+        return Response(serializer.data)
+
+
+class DeleteUserView(APIView):
+    def delete(self, request, pk):
+        user = User.objects.filter(pk=pk).first()
+        if user is None:
+            raise AuthenticationFailed('User not found!')
+        user.delete()
+        return Response({'message': 'User was deleted successfully!'})
+
+class AllUsersView(APIView):
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UsersSerializer(users, many=True)
         return Response(serializer.data)
 
 

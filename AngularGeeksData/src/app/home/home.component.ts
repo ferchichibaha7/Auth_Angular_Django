@@ -1,3 +1,4 @@
+import { take } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Emitters } from '../emitters/emitters';
@@ -12,18 +13,42 @@ export class HomeComponent implements OnInit {
 
   constructor(private auth_service: UserAuthService,private router: Router,
     ) { }
+users =[]
+user = {}
+errormsg =''
 logedin = false
   ngOnInit(): void {
-    this.auth_service.getUser().subscribe(res=>{
-      this.logedin = true
-      Emitters.authEmitter.emit(true);
-
-    },error=>{
-      this.logedin = false
-      Emitters.authEmitter.emit(false);
-      this.router.navigate(['/auth']);
-
-    })
+    this.islogi();
   }
 
+islogi(){
+  this.auth_service.getUser().subscribe(res=>{
+    this.user = res
+
+    this.logedin = true
+    Emitters.authEmitter.emit(true);
+    this.getusers()
+
+
+  },error=>{
+    this.logedin = false
+    Emitters.authEmitter.emit(false);
+    this.router.navigate(['/auth']);
+
+  })
+}
+
+getusers(){
+  this.auth_service.allUsers().pipe(take(1)).subscribe(res=>{
+    this.users = res.filter(res=>{
+      return res.id !== this.user['id'];
+    });
+
+  })
+}
+delete(id : number){
+  this.auth_service.deleteUser(id).pipe(take(1)).subscribe(res=>{
+   this.getusers()
+  })
+}
 }

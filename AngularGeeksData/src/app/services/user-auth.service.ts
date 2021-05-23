@@ -35,5 +35,16 @@ export class UserAuthService {
     });
   }
 
+  deleteUser(id : number): Observable<any> {
+    return this.http.delete<any>(this.baseurl+'user/'+id, {
+      withCredentials: true
+    });
+  }
+
+  allUsers(): Observable<any> {
+    return this.http.get<any>(this.baseurl+'users', {
+      withCredentials: true
+    });
+  }
 
 }
