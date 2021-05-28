@@ -1,5 +1,5 @@
 # Auth_Angular_Django_test_GeeksData
-Test Développeur Web
+
 
 -	Création d’un REST API  ( Django Rest Framework ) 
 -	Authentification et les droits d'accès end_points ( Jwt ( json web token )   cookies )
