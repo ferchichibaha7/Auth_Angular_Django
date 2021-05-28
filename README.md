@@ -1,4 +1,4 @@
-# Auth_Angular_Django_test_GeeksData
+# Auth_Angular_Django
 
 
 -	Création d’un REST API  ( Django Rest Framework ) 
